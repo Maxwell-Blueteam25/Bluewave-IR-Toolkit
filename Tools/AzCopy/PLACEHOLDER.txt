@@ -1,0 +1,5 @@
+[MISSING BINARY]
+Please download AzCopy v10 from Microsoft and place 'azcopy.exe' here: https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10
+
+Purpose:
+Recursively streams the output folder (including 16GB+ RAM dumps) to Azure Blob Storage.
