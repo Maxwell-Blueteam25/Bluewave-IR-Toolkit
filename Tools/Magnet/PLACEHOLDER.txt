@@ -1,0 +1,5 @@
+[MISSING BINARY]
+Please download Magnet RAM Capture (Free) and place the executable here. https://www.magnetforensics.com/resources/magnet-ram-capture/
+
+Filename expected by script: MRCv120.exe
+(If using a different tool, update Start-Collection.ps1 Line 17)
