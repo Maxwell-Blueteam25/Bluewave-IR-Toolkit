@@ -1,0 +1,24 @@
+# Ignore Tool Binaries (BYOT - Licensing Compliance)
+*.exe
+*.dll
+*.iso
+*.bin
+
+# Ignore Compressed Evidence and Archives
+*.zip
+*.7z
+*.vhdx
+
+# Ignore Evidence Output Folders
+Bluewave_IR_*
+Parsed/
+Raw/
+Memory/
+Analysis/
+
+# Keep the folder structure but ignore files inside
+Tools/*/*
+!Tools/*/PLACEHOLDER.txt
+!Start-Collection.ps1
+!README.md
+!LICENSE
