@@ -1,0 +1,16 @@
+[MISSING BINARY]
+Please generate your Velociraptor Offline Collector and place the .exe here.
+
+Recommended Build Command (Docker):
+cd $env:TEMP
+git clone https://github.com/weslambert/velociraptor-docker
+cd velociraptor-docker
+docker compose up
+
+Target Artifacts used in Bluewave Build:
+- Windows.KapeFiles.Targets (Triage: KapeTriage / SANS_Triage)
+- Windows.EventLogs.EvtxHunter
+- Windows.EventLogs.Evtx
+- Windows.System.DNSCache
+- Windows.Sysinternals.Autoruns
+- Windows.System.Services
