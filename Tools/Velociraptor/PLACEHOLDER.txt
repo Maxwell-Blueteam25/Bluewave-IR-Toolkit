@@ -1,6 +1,9 @@
 [MISSING BINARY]
 Please generate your Velociraptor Offline Collector and place the .exe here.
 
+The script will automatically detect and run any .exe file found in this folder.
+Do not place multiple executables here.
+
 Recommended Build Command (Docker):
 cd $env:TEMP
 git clone https://github.com/weslambert/velociraptor-docker
