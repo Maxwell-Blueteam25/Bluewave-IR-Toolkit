@@ -29,7 +29,7 @@ Generate a standalone "Offline Collector" using the official Docker image.
 * `Windows.Sysinternals.Autoruns`
 * `Windows.System.Services`
 
-### 2. Tools/KAPE/
+### 2. Tools/Kape/
 Download KAPE from Kroll.
 * **Purpose:** Runs "Safe" Live Triage modules (non-locking).
 * **Modules Used:** `Hayabusa`, `PowerShell_Process_Cmdline`, `Windows_Net_Start`.
