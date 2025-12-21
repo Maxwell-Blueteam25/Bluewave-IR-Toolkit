@@ -54,6 +54,8 @@ Download `azcopy.exe` (v10) from Microsoft.
 
 3. **Run on Endpoint (Admin):**
    ```
-   .\Start-Collection.ps1 -SasToken "?sv=2022-11-02&ss=b&srt=sco..."
+   .\Start-Collection.ps1 -SasToken "?sv=2022-11-02&ss=b&srt=sco..." .\Start-Collection.ps1 `
+     -StorageContainerUrl "https://myclient.blob.core.windows.net/evidence-container" `
+     -SasToken "?sv=2022-11-02&ss=b&srt=sco..."
    ```
    
