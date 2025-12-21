@@ -1,0 +1,7 @@
+[MISSING BINARY]
+Please download KAPE from Kroll and extract the folder here.
+
+Structure:
+/Tools/KAPE/kape.exe
+/Tools/KAPE/Targets/
+/Tools/KAPE/Modules/
