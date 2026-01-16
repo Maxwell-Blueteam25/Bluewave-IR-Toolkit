@@ -1,0 +1,6 @@
+Type,Value,Constraint_Path,Constraint_Ext,Comment
+file_name,bad_malware.exe,C:\ProgramData\,,Found on Patient Zero
+file_hash,A1B2C3D4E5F67890,C:\Users\,.exe,Malicious Payload Hash
+registry_key,HKLM\Software\EvilKey,,,Persistence Mechanism
+registry_value,HKLM\Software\Microsoft\Windows\Run\Updater,,,Run Key Backdoor
+process_name,svchost.exe,,,Check for suspicious path execution
