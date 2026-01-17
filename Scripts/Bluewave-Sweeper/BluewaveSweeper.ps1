@@ -39,10 +39,15 @@ function Invoke-Sweep {
     param(
         [Parameter(Mandatory = $true)]
         [string]$InputJson,
+
         [Parameter(Mandatory = $false)]
-        [string]$ReportMode,
+        [string]$ReportMode, 
+
         [string]$SMBPath,
-        [string]$SasURL
+
+        
+        
+        [string]$SasUrl
     )
     
     $MasterReport = @()
@@ -54,6 +59,7 @@ function Invoke-Sweep {
         Write-Error "Profile not found"; exit
     }
 
+    
     if (-not (Test-Json -Json $RawJsonContent -SchemaFile $Schema)){
         Write-Error "Improperly Formatted JSON"; exit
     } else {
@@ -62,6 +68,7 @@ function Invoke-Sweep {
 
     $ConfigObject = $RawJsonContent | ConvertFrom-Json
 
+    
     foreach ($SweepItem in $ConfigObject.sweeps) {
 
         $Result = $null
@@ -88,25 +95,30 @@ function Invoke-Sweep {
         }
     }
 
+    
     $ReportName = "Report_$($env:COMPUTERNAME)_$(Get-Date -Format 'yyyyMMdd_HHmmss').json"
     $BasePath = if ($PSScriptRoot) { $PSScriptRoot } else { "." }
     $ReportPath = Join-Path -Path $BasePath -ChildPath $ReportName
     
     $MasterReport | ConvertTo-Json -Depth 3 | Set-Content -Path $ReportPath
 
+    
     switch ($ReportMode) {
         Local { Write-Host "Mode: Local Only. Saved to $ReportPath" -ForegroundColor Gray }
         
         Cloud { 
-            if (-not $SasURL){ Write-Host "SAS URL Missing" -ForegroundColor Red; return }
+            
+            if (-not $SasUrl){ 
+                Write-Host "Cloud Mode requires -SasUrl" -ForegroundColor Red
+                return 
+            }
             
             Write-Host "Uploading to Azure Blob..." -ForegroundColor Cyan
+            
             try {
-                $Headers = @{ 'x-ms-blob-type' = 'BlockBlob' }
-                $UriParts = $SasURL -split "\?"
-                $UploadUri = "$($UriParts[0])/$ReportName?$($UriParts[1])"
                 
-                Invoke-RestMethod -Uri $UploadUri -Method Put -InFile $ReportPath -Headers $Headers -ErrorAction Stop
+                Add-FileToBlobStorage -file $ReportPath -connectionstring $SasUrl
+                
                 Write-Host "Success: Uploaded to Azure" -ForegroundColor Green
             } catch {
                 Write-Error "Failed to upload to Azure: $($_.Exception.Message)"
@@ -337,4 +349,25 @@ function Invoke-FileModule {
             Details   = $_.Exception.Message
         }
     }
+}
+
+function Add-FileToBlobStorage{
+    Param(
+        [Parameter(Mandatory=$true)]
+        [ValidateScript({Test-Path $_ })]
+        [string]
+        $file,
+        [Parameter(Mandatory=$true)]
+        [ValidateScript({$_ -match "https\:\/\/(.)*\.blob.core.windows.net\/(.)*\?(.)*"})]
+        [string]
+        $connectionstring
+    )
+    $HashArguments = @{
+        uri = $connectionstring.replace("?","/$($(get-item $file).name)?")
+        method = "Put"
+        InFile = $file
+        headers = @{"x-ms-blob-type" = "BlockBlob"}
+ 
+    }
+    Invoke-RestMethod @HashArguments
 }
